@@ -18,6 +18,17 @@ class Reservation extends Model
         'total_price',
     ];
 
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

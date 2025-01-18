@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DashboardController;
 
- 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,3 +43,8 @@ Route::post('/reservation', [ReservationController::class, 'store'])->name('rese
 Route::get('/managereservations', function () {
     return view('managereservations');
 });
+Route::get('/managereservations', [ReservationController::class, 'index'])->name('managereservations');
+Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
+Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+
+

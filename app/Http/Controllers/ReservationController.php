@@ -53,4 +53,57 @@ class ReservationController extends Controller
 
         return redirect()->route('user')->with('success', 'Reservation placed successfully and is pending approval.');
     }
+
+    public function index()
+    {
+        // Fetch all reservations with related user and vehicle details
+        $reservations = Reservation::with('user', 'vehicle')->get();
+
+        // Pass reservations to the view
+        return view('managereservations', compact('reservations'));
+    }
+
+
+    // Update the status of a reservation
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,confirmed,cancelled,completed',
+        ]);
+
+        $reservation = Reservation::findOrFail($id);
+        $reservation->status = $request->status;
+        $reservation->save();
+
+        // Update vehicle status when reservation is confirmed
+        if ($request->status === 'confirmed') {
+            $vehicle = Vehicle::findOrFail($reservation->vehicle_id);
+            $vehicle->status = 'unavailable';  // Set the vehicle status to 'unavailable'
+            $vehicle->save();
+        }
+
+        // Optionally handle other status changes (e.g., make the vehicle available again)
+        if ($request->status === 'cancelled' || $request->status === 'completed') {
+            $vehicle = Vehicle::findOrFail($reservation->vehicle_id);
+            $vehicle->status = 'available';  // Set the vehicle status back to 'available'
+            $vehicle->save();
+        }
+
+        return back()->with('success', 'Reservation status updated successfully.');
+    }
+    public function destroy($id)
+    {
+        // Find the reservation by ID
+        $reservation = Reservation::findOrFail($id);
+
+        // Optional: Update the vehicle status to "available" when the reservation is deleted
+        $vehicle = Vehicle::findOrFail($reservation->vehicle_id);
+        $vehicle->status = 'available';  // Set the vehicle status back to 'available'
+        $vehicle->save();
+
+        // Delete the reservation
+        $reservation->delete();
+
+        return back()->with('success', 'Reservation deleted successfully.');
+    }
 }
