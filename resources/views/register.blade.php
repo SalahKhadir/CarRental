@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
-            <a class="navbar-brand text-info fw-bold fs-4" href="#">CarRental</a>
+            <a class="navbar-brand text-info fw-bold fs-4" href="/">CarRental</a>
         </div>
     </nav>
 
