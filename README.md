@@ -1,3 +1,97 @@
+# 🚗 CarRental - Vehicle Rental Management System
+
+## 📋 Overview
+CarRental is a web-based vehicle rental management system developed using Laravel, designed to streamline the vehicle reservation process. The system provides an intuitive interface for both customers and administrators to manage vehicle rentals effectively.
+
+## 🛠️ Tech Stack
+- **Backend:** Laravel (PHP)
+- **Frontend:** Blade Templates with Bootstrap/Tailwind CSS
+- **Database:** MySQL
+- **Authentication:** Laravel's built-in auth system
+
+## ✨ Features
+
+### 👤 Customer Interface
+- Clean and intuitive vehicle browsing experience
+- Advanced filtering options by brand and other criteria
+- Detailed vehicle information display:
+  - Vehicle specifications (type, capacity)
+  - Pricing details
+  - Availability status
+- Streamlined reservation process
+- User account management
+
+### 👨‍💼 Admin Dashboard
+- **Vehicle Management:**
+  - Comprehensive vehicle fleet overview
+  - Add/Edit/Delete vehicle operations
+  - Real-time availability tracking
+  
+- **Analytics Display:**
+  - Total reservation counter
+  - Available/Unavailable vehicle tracking
+  - Top customer identification
+
+
+## 📊 Current Implementation Status
+
+### ✅ Completed Features
+- Core vehicle management system
+- Basic reservation functionality
+- User authentication with role management
+- Admin dashboard with basic analytics
+- Customer-facing vehicle browsing interface
+
+### 🚧 Pending Features
+- Payment system integration
+- Enhanced reservation management
+- Advanced reporting capabilities
+- Email notification system
+- User profile customization
+
+## 🔧 Installation
+
+1. Clone the repository
+```bash
+git clone [repository-url]
+```
+
+2. Install dependencies
+```bash
+composer install
+npm install
+```
+
+3. Configure environment
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+5. Start the server
+```bash
+php artisan serve
+```
+
+## 🚀 Usage
+
+### Customer Access
+- Visit the homepage
+- Browse available vehicles
+- Create an account/Login to make reservations
+- Select vehicle and submit reservation request
+
+### Admin Access
+- Login with admin credentials
+- Access dashboard for management features
+- Manage vehicles and reservations
+- Monitor system analytics
+
+
+---
+⚠️ Note: This project is currently in development, with payment integration pending implementation.
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
