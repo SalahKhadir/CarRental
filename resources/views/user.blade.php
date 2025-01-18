@@ -9,11 +9,18 @@
 </head>
 
 <body>
+    @if (session('status'))
+    <div class="alert alert-{{ session('status_type') == 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+        {{ session('status') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand text-info fw-bold fs-4" href="/">CarRental</a>
             <div class="ms-auto d-flex">
+                <a href="/mesreservations" class="btn btn-outline-info me-2">My Reservations</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-danger ms-2">Logout</button>

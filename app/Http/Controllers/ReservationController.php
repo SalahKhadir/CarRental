@@ -50,7 +50,6 @@ class ReservationController extends Controller
         $reservation->updated_at = now();
         $reservation->save();
 
-
         return redirect()->route('user')->with('success', 'Reservation placed successfully and is pending approval.');
     }
 
@@ -105,5 +104,13 @@ class ReservationController extends Controller
         $reservation->delete();
 
         return back()->with('success', 'Reservation deleted successfully.');
+    }
+    public function showReservations()
+    {
+        // Get reservations for the authenticated user
+        $reservations = Reservation::where('user_id', Auth::id())->get();
+
+        // Pass the reservations to the view
+        return view('mesreservations', compact('reservations'));
     }
 }

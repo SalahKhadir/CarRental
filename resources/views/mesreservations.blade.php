@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarRental - Manage Reservations</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>CarRental - My Reservations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand text-info fw-bold fs-4" href="/">CarRental</a>
             <div class="ms-auto">
-                <a href="/dashboard" class="btn btn-outline-info me-2">Home</a>
+                <a href="/user" class="btn btn-outline-info me-2">Home</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-danger ms-2">Logout</button>
@@ -23,17 +22,16 @@
         </div>
     </nav>
 
-    <<section id="reservations">
-        <h2 class="h4 fw-bold mb-3">Reservations List</h2>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-        </div>
+    <!-- Reservations List -->
+    <section id="reservations">
+        <h2 class="h4 fw-bold mb-3">My Reservations</h2>
+
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
         @endif
 
-        <!-- Wrapper for the table -->
         <div class="container">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -48,7 +46,6 @@
                             <th>Start date</th>
                             <th>End date</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,38 +60,32 @@
                             <td>{{ $reservation->start_date->format('Y-m-d') }}</td>
                             <td>{{ $reservation->end_date->format('Y-m-d') }}</td>
                             <td>
-                                <form action="{{ route('reservation.update', $reservation->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <select name="status" onchange="this.form.submit()">
-                                        <option value="pending" {{ $reservation->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                        <option value="confirmed" {{ $reservation->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                        <option value="cancelled" {{ $reservation->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                        <option value="completed" {{ $reservation->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                                    </select>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</button>
-                                </form>
+                                <!-- Apply color based on status -->
+                                @if($reservation->status == 'pending')
+                                    <span class="badge bg-warning text-dark">{{ ucfirst($reservation->status) }}</span>
+                                @elseif($reservation->status == 'confirmed')
+                                    <span class="badge bg-info text-dark">{{ ucfirst($reservation->status) }}</span>
+                                @elseif($reservation->status == 'cancelled')
+                                    <span class="badge bg-danger text-white">{{ ucfirst($reservation->status) }}</span>
+                                @elseif($reservation->status == 'completed')
+                                    <span class="badge bg-success text-white">{{ ucfirst($reservation->status) }}</span>
+                                @else
+                                    <span class="badge bg-secondary text-white">Unknown</span>
+                                @endif
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center">No reservations found.</td>
+                            <td colspan="9" class="text-center">No reservations found.</td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-        </section>
+    </section>
 
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

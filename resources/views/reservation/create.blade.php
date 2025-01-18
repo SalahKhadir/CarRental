@@ -9,11 +9,13 @@
 </head>
 
 <body>
+
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand text-info fw-bold fs-4" href="/">CarRental</a>
             <div class="ms-auto d-flex">
+                <a href="/user" class="btn btn-outline-info me-2">Home</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-danger ms-2">Logout</button>
@@ -50,5 +52,8 @@
         </form>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+
 
 </html>
