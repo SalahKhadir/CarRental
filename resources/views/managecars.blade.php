@@ -100,7 +100,7 @@
                         <td>{{ $vehicle->brand }} {{ $vehicle->model }}</td>
                         <td>{{ $vehicle->type }}</td>
                         <td>€{{ $vehicle->price_per_day }}</td>
-                        <td>{{ $vehicle->availability ? 'Available' : 'Not Available' }}</td>
+                        <td>{{ $vehicle->availability ? 'Not Available' : 'Available' }}</td>
                         <td>
                             <a href="{{ route('managecars.edit', $vehicle->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('managecars.destroy', $vehicle->id) }}" method="POST" style="display: inline;">

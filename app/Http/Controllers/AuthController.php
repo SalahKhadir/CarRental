@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Reservation;
+use App\Models\Vehicle;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -28,11 +32,6 @@ class AuthController extends Controller
         }
 
         return back()->with('error', 'Invalid email or password.');
-    }
-
-    public function dashboard()
-    {
-        return view('dashboard'); // Create a dashboard blade file later
     }
 
     public function userInterface()
@@ -74,5 +73,33 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('login.form')->with('success', 'Account created successfully! Please log in.');
+    }
+
+    public function dashboard()
+    {
+        // Get the count of reservations
+        $totalReservations = Reservation::count();
+
+        // Get the count of available and unavailable vehicles
+        $availableCars = Vehicle::where('status', 'available')->count();
+        $unavailableCars = Vehicle::where('status', 'unavailable')->count();
+
+        // Get the best customer (with the most reservations)
+        $bestCustomer = DB::table('reservations')
+            ->select('user_id', DB::raw('count(*) as total'))
+            ->groupBy('user_id')
+            ->orderByDesc('total')
+            ->limit(1)
+            ->first();
+
+        $bestCustomerName = $bestCustomer ? User::find($bestCustomer->user_id)->name : 'N/A';
+
+        // Pass the data to the view
+        return view('dashboard', [
+            'totalReservations' => $totalReservations,
+            'availableCars' => $availableCars,
+            'unavailableCars' => $unavailableCars,
+            'bestCustomer' => $bestCustomerName,
+        ]);
     }
 }
